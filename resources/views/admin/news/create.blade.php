@@ -35,7 +35,7 @@
                         </div>
                     </div>
                     {{ csrf_field() }}
-                    <input rype="submit" class="btn btn-primary" value="更新">
+                    <input type="submit" class="btn btn-primary" value="更新">
                 </from>
             </div>
         </div>

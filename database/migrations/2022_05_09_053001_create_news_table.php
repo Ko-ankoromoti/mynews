@@ -18,7 +18,7 @@ class CreateNewsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title'); //ニュースのタイトルを保存するカラム
             $table->string('body'); //ニュースの本文を保存するカラム
-            $table->string('image_psth')->unllable(); //画像のバスを保存するカラム
+            $table->string('image_path')->unllable(); //画像のバスを保存するカラム
             $table->timestamps();
         });
     }

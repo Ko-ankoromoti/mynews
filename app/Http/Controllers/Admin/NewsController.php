@@ -24,7 +24,7 @@ class NewsController extends Controller
        // Varidationを行う
        $this->validate($request, News::$rules);
        
-       $news = new News;
+       $news = new News();
        $form = $request->all();
        
        // フォームから画像が送信されてきたら、保存して、$news->image_pathに画像のバスを保存する
@@ -45,6 +45,59 @@ class NewsController extends Controller
        $news->save();
         // admin/news/createにリダイレクトする
        return redirect('admin/news/create');
-  }     
+  }  
+  
+  //以下を追記
+  public function index(Request $request)
+  {
+      $cond_title = $request->cond_title;
+      if ($cond_title != '') {
+          // 検索されたら検索結果を取得する
+          $posts = News::where('title', $cond_title)->get();
+      } else {
+          // それ以外はすべてのニュースを取得する
+          $posts = News::all();
+      }
+      return view('admin.news.index', ['posts' => $posts, 'cond_title' => $cond_title]);
+  }
+  
+  // 以下を追記
+  
+  public function edit(Request $request)
+  {
+      // News Modelからデータを取得する
+      $news = News::find($request->id);
+      
+      return view('admin.news.edit', ['news_form' => $news]);
+  }
+  
+  
+  public function update(Request $request)
+  {  
+      //Validationをかける
+      $this->validate($request, News::$rules);
+      // New Midelからデータを取得する
+      $news = News::find($request->id);
+      // 送信されてきたファームを格納する
+      $news_form = $request->all();
+      unset($news_form['_token']);
+      
+      //該当するデータを上書きして保存する
+      $news->fill($news_form)->save();
+      
+      return redirect('admin/news');
+  } 
+  
+  // 以下を追記
+  public function delete(Request $request)
+  {
+      // 該当するNews Modelを取得
+      $newa = News::find($request->id);
+      // 削除する
+      $news->delete();
+      return redirect('admin/news/');
+  }
+  
+  
 }
 
