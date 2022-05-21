@@ -30,8 +30,9 @@ Route::group(['prefix' => 'admin'], function() {
 });
 
 
- Route::get('XXX', 'AAAContoller@bbb');
-
+//  Route::get('XXX', 'AAAContoller@bbb');
+Route::get('/', 'NewsController@index');
+Route::get('/', 'ProfileController@index');
 
 Auth::routes();
 
